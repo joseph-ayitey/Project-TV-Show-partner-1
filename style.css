@@ -1,5 +1,6 @@
 #root {
-  color: red;
+  color: burlywood;
+  background: linear-gradient(#4e4e4e, #482929);
 }
 
 #episodes {
@@ -12,4 +13,13 @@
   border: 1px solid #ccc;
   padding: 1rem;
   border-radius: 6px;
+}
+
+.episode-card img {
+  max-width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.summary {
+  font-size: 0.9rem;
 }
