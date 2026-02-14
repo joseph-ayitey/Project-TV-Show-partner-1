@@ -1,5 +1,6 @@
-/*You can edit ALL of the code here
-function setup() {
+// WHY DID YOU COMMENT LINE 2 TO 11!
+//You can edit ALL of the code here
+/*function setup() { 
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 }
@@ -7,7 +8,7 @@ function setup() {
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = `Got ${episodeList.length} episode(s)`;
-}*/
+}*/ // WHEN I UNCOMMENT, YOUR PAGE BREAKS.
 
 const root = document.getElementById("root");
 
