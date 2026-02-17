@@ -1,39 +1,61 @@
-// WHY DID YOU COMMENT LINE 2 TO 11!
 //You can edit ALL of the code here
-/*function setup() { 
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
-}
-
-function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
-  rootElem.innerHTML = `Got ${episodeList.length} episode(s)`;
-}*/ // WHEN I UNCOMMENT, YOUR PAGE BREAKS.
-
 const root = document.getElementById("root");
 
-// Get all episodes from provided file
-const episodes = getAllEpisodes();
+// State
+let allEpisodes = [];
+let filteredEpisodes = [];
 
-// Create page title
-const title = document.createElement("h1");
-title.textContent = "TV Show Episodes";
-root.appendChild(title); 
+// Init
+function setup() {
+  allEpisodes = getAllEpisodes();
+  filteredEpisodes = allEpisodes;
 
-// Container for episodes
-const episodesContainer = document.createElement("section");
-episodesContainer.id = "episodes";
-root.appendChild(episodesContainer);
+  createLayout();
+  renderEpisodes(filteredEpisodes);
+}
 
-// Render all episodes
-episodes.forEach((episode) => {
-  const episodeCode = formatEpisodeCode(
-    episode.season,
-    episode.number
-  );
+function createLayout() {
+  root.innerHTML = "";
+
+  // Create page title
+  const title = document.createElement("h1");
+  title.textContent = "TV Show Episodes";
+  root.appendChild(title);
+
+  // Container for episodes
+  const episodesContainer = document.createElement("section");
+  episodesContainer.id = "episodes";
+  root.appendChild(episodesContainer);
+
+  // Footer attribution (TVMaze licensing requirement)
+  const footer = document.createElement("footer");
+  footer.innerHTML = `
+    <p>
+      Data originally from
+      <a href="https://www.tvmaze.com" target="_blank" rel="noopener">
+        TVMaze.com
+      </a>
+    </p>
+  `;
+  root.appendChild(footer);
+}
+
+function renderEpisodes(episodeList) {
+  const episodesContainer = document.getElementById("episodes");
+  episodesContainer.innerHTML = "";
+
+  episodeList.forEach((episode) => {
+    const card = createEpisodeCard(episode);
+    episodesContainer.appendChild(card);
+  });
+}
+
+function createEpisodeCard(episode) {
+  const episodeCode = formatEpisodeCode(episode.season, episode.number);
 
   const card = document.createElement("article");
   card.className = "episode-card";
+  card.id = `episode-${episode.id}`;
 
   card.innerHTML = `
     <h2>${episode.name}</h2>
@@ -56,20 +78,8 @@ episodes.forEach((episode) => {
     </p>
   `;
 
-  episodesContainer.appendChild(card);
-});
-
-// Footer attribution (TVMaze licensing requirement)
-const footer = document.createElement("footer");
-footer.innerHTML = `
-  <p>
-    Data originally from
-    <a href="https://www.tvmaze.com" target="_blank" rel="noopener">
-      TVMaze.com
-    </a>
-  </p>
-`;
-root.appendChild(footer);
+  return card;
+}
 
 // Utility: zero-padded episode code
 function formatEpisodeCode(season, number) {
@@ -77,6 +87,5 @@ function formatEpisodeCode(season, number) {
   const e = String(number).padStart(2, "0");
   return `S${s}E${e}`;
 }
-
 
 window.onload = setup;
